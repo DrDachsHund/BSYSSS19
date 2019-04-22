@@ -1,0 +1,4 @@
+hello i am a parent 
+Ende des Programms 
+hello i am a child 
+Ende des Programms 

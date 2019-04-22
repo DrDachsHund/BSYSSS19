@@ -1,0 +1,57 @@
+Questions:
+
+1: ./mlfq.py -n 2 -s 1 -j 2 -M 0 -i 0 -m 4 -c
+Here is the list of inputs:
+OPTIONS jobs 2
+OPTIONS queues 2
+OPTIONS allotments for queue  1 is   1
+OPTIONS quantum length for queue  1 is  10
+OPTIONS allotments for queue  0 is   1
+OPTIONS quantum length for queue  0 is  10
+OPTIONS boost 0
+OPTIONS ioTime 0
+OPTIONS stayAfterIO False
+OPTIONS iobump False
+
+
+For each job, three defining characteristics are given:
+  startTime : at what time does the job enter the system
+  runTime   : the total CPU time needed by the job to finish
+  ioFreq    : every ioFreq time units, the job issues an I/O
+              (the I/O takes ioTime units to complete)
+
+Job List:
+  Job  0: startTime   0 - runTime   1 - ioFreq   0
+  Job  1: startTime   0 - runTime   3 - ioFreq   0
+
+
+Execution Trace:
+
+[ time 0 ] JOB BEGINS by JOB 0
+[ time 0 ] JOB BEGINS by JOB 1
+[ time 0 ] Run JOB 0 at PRIORITY 1 [ TICKS 9 ALLOT 1 TIME 0 (of 1) ]
+[ time 1 ] FINISHED JOB 0
+[ time 1 ] Run JOB 1 at PRIORITY 1 [ TICKS 9 ALLOT 1 TIME 2 (of 3) ]
+[ time 2 ] Run JOB 1 at PRIORITY 1 [ TICKS 8 ALLOT 1 TIME 1 (of 3) ]
+[ time 3 ] Run JOB 1 at PRIORITY 1 [ TICKS 7 ALLOT 1 TIME 0 (of 3) ]
+[ time 4 ] FINISHED JOB 1
+
+Final statistics:
+  Job  0: startTime   0 - response   0 - turnaround   1
+  Job  1: startTime   0 - response   1 - turnaround   4
+
+  Avg  1: startTime n/a - response 0.50 - turnaround 2.50
+
+2: 
+	Example 1 ./mlfq.py --jlist 0,200,0 -q 10 -n 3 //-i 0 -c
+	Example 2 ./mlfq.py --jlist 0,180,0:100,20,0 -q 10 
+	Example 3 ./mlfq.py --jList 0,200,0:50,25,1 -n 3 -q 10 -S -c
+
+3:
+	./mlfq.py -j 5 -q 10 -n 1 -M 0 -i 0 -c
+
+4:
+	./mlfq.py --stay --jlist 0,100,9:0,100,0 -q 10 -n 3 -i 0 -c 
+
+5:
+	theoretisch alle 200/100 ms je nach dem wie boost funktioniert und q length

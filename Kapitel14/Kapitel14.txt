@@ -1,0 +1,128 @@
+Questions:
+
+2:
+	Er zeigt mir die stelle an der der fehler austritt.
+
+3:
+	1 errors in context 1 of 1:
+==12199== Invalid read of size 4
+==12199==    at 0x1086D3: main (null.c:9)
+==12199==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==12199== 
+==12199== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+Segmentation fault
+
+4:
+==15116== HEAP SUMMARY:
+==15116==     in use at exit: 4 bytes in 1 blocks
+==15116==   total heap usage: 1 allocs, 0 frees, 4 bytes allocated
+==15116== 
+==15116== Searching for pointers to 1 not-freed blocks
+==15116== Checked 68,368 bytes
+==15116== 
+==15116== 4 bytes in 1 blocks are definitely lost in loss record 1 of 1
+==15116==    at 0x4C2BBAF: malloc (vg_replace_malloc.c:299)
+==15116==    by 0x1086C8: main (malloc.c:6)
+==15116== 
+==15116== LEAK SUMMARY:
+==15116==    definitely lost: 4 bytes in 1 blocks
+==15116==    indirectly lost: 0 bytes in 0 blocks
+==15116==      possibly lost: 0 bytes in 0 blocks
+==15116==    still reachable: 0 bytes in 0 blocks
+==15116==         suppressed: 0 bytes in 0 blocks
+==15116== 
+==15116== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==15116== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+
+5:
+==20846== Invalid write of size 4
+==20846==    at 0x1086D7: main (data.c:7)
+==20846==  Address 0x51d71d0 is 0 bytes after a block of size 400 alloc'd
+==20846==    at 0x4C2BBAF: malloc (vg_replace_malloc.c:299)
+==20846==    by 0x1086C8: main (data.c:6)
+==20846== 
+==20846== 
+==20846== HEAP SUMMARY:
+==20846==     in use at exit: 400 bytes in 1 blocks
+==20846==   total heap usage: 1 allocs, 0 frees, 400 bytes allocated
+==20846== 
+==20846== 400 bytes in 1 blocks are definitely lost in loss record 1 of 1
+==20846==    at 0x4C2BBAF: malloc (vg_replace_malloc.c:299)
+==20846==    by 0x1086C8: main (data.c:6)
+==20846== 
+==20846== LEAK SUMMARY:
+==20846==    definitely lost: 400 bytes in 1 blocks
+==20846==    indirectly lost: 0 bytes in 0 blocks
+==20846==      possibly lost: 0 bytes in 0 blocks
+==20846==    still reachable: 0 bytes in 0 blocks
+==20846==         suppressed: 0 bytes in 0 blocks
+==20846== 
+==20846== For counts of detected and suppressed errors, rerun with: -v
+==20846== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+
+	Es kommt zar kein fehler aber man könnte unter unständen etwas anderes
+	ausversehen überschreiben! da wir ja nur 100 zur verfügung haben also 0-99
+	und auf 100 zugreifen!
+
+6:
+==23469== HEAP SUMMARY:
+==23469==     in use at exit: 0 bytes in 0 blocks
+==23469==   total heap usage: 2 allocs, 2 frees, 1,064 bytes allocated
+==23469== 
+==23469== All heap blocks were freed -- no leaks are possible
+==23469== 
+==23469== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==23469== 
+==23469== 1 errors in context 1 of 1:
+==23469== Invalid read of size 4
+==23469==    at 0x10879D: main (array.c:12)
+==23469==  Address 0x51d704c is 12 bytes inside a block of size 40 free'd
+==23469==    at 0x4C2CDDB: free (vg_replace_malloc.c:530)
+==23469==    by 0x108794: main (array.c:11)
+==23469==  Block was alloc'd at
+==23469==    at 0x4C2BBAF: malloc (vg_replace_malloc.c:299)
+==23469==    by 0x108758: main (array.c:6)
+==23469== 
+==23469== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+
+er liest die zahl die noch an der addrese steht dürfte es aber eigentluch
+nicht mehr machen da sie ja schon gefreed ist
+valgrind rekennt dies auch als fejler an (Invalid read)
+
+7: 
+==25453== HEAP SUMMARY:
+==25453==     in use at exit: 40 bytes in 1 blocks
+==25453==   total heap usage: 2 allocs, 2 frees, 1,064 bytes allocated
+==25453== 
+==25453== Searching for pointers to 1 not-freed blocks
+==25453== Checked 68,368 bytes
+==25453== 
+==25453== 40 bytes in 1 blocks are definitely lost in loss record 1 of 1
+==25453==    at 0x4C2BBAF: malloc (vg_replace_malloc.c:299)
+==25453==    by 0x108758: main (array.c:6)
+==25453== 
+==25453== LEAK SUMMARY:
+==25453==    definitely lost: 40 bytes in 1 blocks
+==25453==    indirectly lost: 0 bytes in 0 blocks
+==25453==      possibly lost: 0 bytes in 0 blocks
+==25453==    still reachable: 0 bytes in 0 blocks
+==25453==         suppressed: 0 bytes in 0 blocks
+==25453== 
+==25453== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+==25453== 
+==25453== 1 errors in context 1 of 2:
+==25453== Invalid free() / delete / delete[] / realloc()
+==25453==    at 0x4C2CDDB: free (vg_replace_malloc.c:530)
+==25453==    by 0x108798: main (array.c:13)
+==25453==  Address 0x51d704c is 12 bytes inside a block of size 40 alloc'd
+==25453==    at 0x4C2BBAF: malloc (vg_replace_malloc.c:299)
+==25453==    by 0x108758: main (array.c:6)
+==25453== 
+==25453== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+
+der normale compiler erkennt den fehler beim compien nicht erst beim 
+ausführen kommt es zu einem fehler. valgrind hingegen erkennt den fehler
+und auch wo er ist.
+
+8:
+	
