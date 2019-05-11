@@ -26,23 +26,24 @@ int main (int argc, char* argv[])
     {
     	    //child
 	    x = 1;
+	    close(fd[0]);
+	    printf("Hello im Child!\n");
+	    write(fd[1],&x,sizeof(x));
 	    close(fd[1]);
-	    write(fd[0],&x,sizeof(x));
-	    printf("im child \n");
+	    printf("Child x = %d\n",x);
    
     } else
     {
         //parent
         //wait(&status); anstatt wait eine pipe machen 
-	close(fd[0]);
-	for (;;)
-	{
-		x = read(fd[1],&x,sizeof(x));
-		printf("x = %d",x);
-		if (x == 1) break;
-		printf("Warte auf child!");
-	}
+	//pipe wratet bis etwas geschrieben wurde von child!!!! keine schleife notwendig
+	close(fd[1]);
+	printf("Waiting for child!\n");
+	printf("Parent x = %d befor read\n",x);
+	read(fd[0],&x,sizeof(x));
+	printf("Partent x = %d after read\n",x);
         printf("im parent \n");
+	close(fd[0]);
     }  
 
     return 0;
