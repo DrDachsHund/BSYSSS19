@@ -1,3 +1,5 @@
-mkdir *DiractoryName* // um neuen ordner zu erstellen
+﻿mkdir *DiractoryName* // um neuen ordner zu erstellen
 cat > *FileName.txt* // um neuen .txt .c etc. zu erstellen
 vim *FileName* // öffnet das dokumen im vim editor
+rm *FileName* // remove file
+ctr + z // shut down currently running programm

@@ -1,0 +1,88 @@
+-addres space size 16k
+physical mem size 64k
+-page size 4k
+
+
+1.
+ (-a) addresspace größer wirt dan gibt es mehr inavlide pages?!?
+	es gibt mehr pages da man mehr addresieren kann
+ (-P) page size größer wird gibt es weniger pages
+
+2.
+ma851kle@ct-bsys-ss19-13:~/Desktop/BSYSSS19/Kapitel18$ ./paging-linear-translate.py -P 8 -a 32 -p 1024 -v - u 0
+ARG seed 0
+ARG address space size 32
+ARG phys mem size 1024
+ARG page size 8
+ARG verbose True
+ARG addresses -1
+
+
+The format of the page table is simple:
+The high-order (left-most) bit is the VALID bit.
+  If the bit is 1, the rest of the entry is the PFN.
+  If the bit is 0, the page is not valid.
+Use verbose mode (-v) if you want to print the VPN # by
+each entry of the page table.
+
+Page Table (from entry 0 down to the max size)
+  [       0]   0x80000061
+  [       1]   0x00000000
+  [       2]   0x00000000
+  [       3]   0x80000033
+
+Virtual Address Trace
+  VA 0x00000019 (decimal:       25) --> PA or invalid address?
+  VA 0x00000009 (decimal:        9) --> PA or invalid address?
+  VA 0x0000000f (decimal:       15) --> PA or invalid address?
+  VA 0x00000012 (decimal:       18) --> PA or invalid address?
+  VA 0x0000001d (decimal:       29) --> PA or invalid address?
+
+page size 8 = ist 3 bit OFFSET (da wir 111 benötigen von 0-7)
+32/8 = pages = 4 (0-3) = 2 bit VPN (da 11 benötigt von 0-3)
+
+19hex -> 11001dual
+
+11 VPN 001 Offset
+
+11dual -> 3dec => page 3 -> 33hex -> 110011dual -> highbit ist 1 -> valid
+
+VPN durch physical page ersetzen 11 -> 110011
+und neu zusammen setzen 
+=> 110011 + 001 = 110011001 -> 199hex phisical address
+
+VA 0x00000019 (decimal:       25) --> 199 (decimal:	409)
+---
+
+WICHTIG!!!!!!
+VIRTUELLE ADDRESEN NACH OBEN HIN MIT 0 FÜLLEN FALS ZU KLEIN ALSO VPN + OFFSET
+(in dem bsp. 3+2 also sollte die addresse 5 lang sein!!!!)
+
+9hex -> 1001 WICHTIG!!! DA ZU KLEIN FÜLLEN
+=> 01001 -> da page 1 inavlid
+
+VA 0x00000009 (decimal:        9) --> invalid
+---
+
+fhex -> 1111 WICHTIG!!! DA ZU KLEIN FÜLLEN
+=> 01111 -> da page 1 invalid
+
+VA 0x0000000f (decimal:       15) --> invalid
+---
+
+12hex -> 10010 => page 2 inavlid 
+
+VA 0x00000012 (decimal:       18) --> invalid
+---
+
+1dhex -> 11101
+=> page 3 -> 33hex -> 110011
+ersetzen -> 110011101 -> 19Dphysical addres
+
+VA 0x0000001d (decimal:       29) --> 19D (decimal:	413)
+
+3.
+wahrscheinlich das letzte da die hälfte des physikalischen speichers für die addrese verwendet wird?!?
+
+4.
+Error: physical memory size must be GREATER than address space size (for this simulation)
