@@ -1,6 +1,16 @@
 ﻿mkdir *DiractoryName* // um neuen ordner zu erstellen
 cat > *FileName.txt* // um neuen .txt .c etc. zu erstellen
-vim *FileName* // öffnet das dokumen im vim editor
 rm *FileName* // remove file
 ctr + z // shut down currently running programm
 tar xvzf *FileName* // zum entpacken
+
+vim *FileName* // öffnet das dokumen im vim editor
+	click 'i' for insert mode //edit current file
+	ESC -> ":x" safe and quit
+	ESC -> ":q!" quit without safing
+	ESC -> ":w" to write file aka. safe current changes
+	ESC -> ":u" undo
+	CRT + R -> redo
+
+C programm übersetzen:
+	gcc nameDesProgramms.c -o nameDesAuszuführendemProgramms
